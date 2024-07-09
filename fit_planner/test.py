@@ -37,20 +37,20 @@ if __name__ == "__main__":
         "    c. Cool-down exercises\n"
         "3. Equipment Usage: Specify how the available equipment will be used.\n"
         "4. Additional Tips: Provide tips based on fitness level and goals.\n\n"
-        "Limit the response to 150 words."
     )
 
     # First API call
     generated_text = call_llm(llm_client, test_prompt)
     print("Generated Text Part 1:", generated_text)
 
-    # Prepare second prompt using the last part of the first response
-    continuation_prompt = "Keep going from here:\n" + generated_text[-100:]  # using the last part to ensure context
+    # Prepare second prompt including the initial instructions
+    continuation_prompt = (
+        "\nKeep going from here:\n"
+    )
 
     # Second API call
     generated_text_continued = call_llm(llm_client, continuation_prompt)
     print("Generated Text Part 2:", generated_text_continued)
 
     # Combine both parts
-    full_generated_text = generated_text + generated_text_continued
-    print("Full Generated Text:", full_generated_text)
+    #full_generated_text = generated_text + generated_
