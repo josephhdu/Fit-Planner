@@ -15,9 +15,13 @@ logger = logging.getLogger(__name__)
 def index(request):
     return render(request, 'workouts/index.html')
 
+# View to render the preferences page
+def preferences(request):
+    return render(request, 'workouts/preferences.html')
+
 # Initialize InferenceClient
 repo_id = "microsoft/Phi-3-mini-4k-instruct"
-hf_token = "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" 
+hf_token = settings.HUGGING_FACE_API_KEY
 llm_client = InferenceClient(model=repo_id, token=hf_token, timeout=300)
 
 # Function to call the language model
