@@ -15,65 +15,96 @@
         </div>
     </header>
     <main>
-        
+        <!-- Progress Bar -->
+        <div class="progressbar">
+            <div class="progress" id="progress"></div>
+            <div class="progress-step progress-step-active" data-title="Schedule" data-step="1"></div>
+            <div class="progress-step" data-title="Preferences" data-step="2"></div>
+            <div class="progress-step" data-title="Goals" data-step="3"></div>
+            <div class="progress-step" data-title="Additional" data-step="4"></div>
+        </div>
+
         <!-- Preferences Form -->
         <form id="preferences-form">
-            <label for="schedule">Select the days you are available for workouts:</label><br>
-            <input type="checkbox" name="schedule" value="Monday"> Monday
-            <input type="checkbox" name="schedule" value="Tuesday"> Tuesday
-            <input type="checkbox" name="schedule" value="Wednesday"> Wednesday
-            <input type="checkbox" name="schedule" value="Thursday"> Thursday
-            <input type="checkbox" name="schedule" value="Friday"> Friday
-            <input type="checkbox" name="schedule" value="Saturday"> Saturday
-            <input type="checkbox" name="schedule" value="Sunday"> Sunday
-            <br><br>
-
-            <label for="workout_duration">Enter your preferred workout duration in minutes:</label><br>
-            <input type="number" id="workout_duration" name="workout_duration" placeholder="e.g., 45"><br><br>
-
-            <label for="workout_areas">Select the muscle groups you want to focus on:</label><br>
-            <div class="muscle-groups">
-                <label><input type="checkbox" name="workout_areas" value="Chest"> Chest</label>
-                <label><input type="checkbox" name="workout_areas" value="Triceps"> Triceps</label>
-                <label><input type="checkbox" name="workout_areas" value="Biceps"> Biceps</label>
-                <label><input type="checkbox" name="workout_areas" value="Back"> Back</label>
-                <label><input type="checkbox" name="workout_areas" value="Shoulders"> Shoulders</label>
-                <label><input type="checkbox" name="workout_areas" value="Legs"> Legs</label>
-                <label><input type="checkbox" name="workout_areas" value="Abs"> Abs</label>
+            <!-- Step 1 -->
+            <div class="form-step form-step-active">
+                <h2 class="form-step-title">Schedule</h2>
+                <label for="schedule">Select the days you are available for workouts:</label><br>
+                <input type="checkbox" name="schedule" value="Monday"> Monday
+                <input type="checkbox" name="schedule" value="Tuesday"> Tuesday
+                <input type="checkbox" name="schedule" value="Wednesday"> Wednesday
+                <input type="checkbox" name="schedule" value="Thursday"> Thursday
+                <input type="checkbox" name="schedule" value="Friday"> Friday
+                <input type="checkbox" name="schedule" value="Saturday"> Saturday
+                <input type="checkbox" name="schedule" value="Sunday"> Sunday
+                <br><br>
+                <div class="btn_box">
+                    <button type="button" class="btn-next">Next</button>
+                </div>
             </div>
-            <br><br>
 
-            <label for="fitness_level">Select your current fitness level:</label><br>
-            <select id="fitness_level" name="fitness_level">
-                <option value="">Select...</option>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
-            </select><br><br>
+            <!-- Step 2 -->
+            <div class="form-step">
+                <h2 class="form-step-title">Preferences</h2>
+                <label for="workout_duration">Enter your preferred workout duration in minutes:</label><br>
+                <input type="number" id="workout_duration" name="workout_duration" placeholder="e.g., 45"><br><br>
+                <label for="workout_areas">Select the muscle groups you want to focus on:</label><br>
+                <div class="muscle-groups">
+                    <label><input type="checkbox" name="workout_areas" value="Chest"> Chest</label>
+                    <label><input type="checkbox" name="workout_areas" value="Triceps"> Triceps</label>
+                    <label><input type="checkbox" name="workout_areas" value="Biceps"> Biceps</label>
+                    <label><input type="checkbox" name="workout_areas" value="Back"> Back</label>
+                    <label><input type="checkbox" name="workout_areas" value="Shoulders"> Shoulders</label>
+                    <label><input type="checkbox" name="workout_areas" value="Legs"> Legs</label>
+                    <label><input type="checkbox" name="workout_areas" value="Abs"> Abs</label>
+                </div>
+                <br><br>
+                <div class="btn_box">
+                    <button type="button" class="btn-prev">Back</button>
+                    <button type="button" class="btn-next">Next</button>
+                </div>
+            </div>
 
-            <label for="fitness_goals">Select your fitness goals:</label><br>
-            <input type="checkbox" name="fitness_goals" value="Muscle gain"> Muscle gain
-            <input type="checkbox" name="fitness_goals" value="Fat loss"> Fat loss
-            <input type="checkbox" name="fitness_goals" value="Endurance"> Endurance
-            <input type="checkbox" name="fitness_goals" value="Flexibility"> Flexibility
-            <br><br>
+            <!-- Step 3 -->
+            <div class="form-step">
+                <h2 class="form-step-title">Goals</h2>
+                <label for="fitness_level">Select your current fitness level:</label><br>
+                <select id="fitness_level" name="fitness_level">
+                    <option value="">Select...</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select><br><br>
+                <label for="fitness_goals">Select your fitness goals:</label><br>
+                <input type="checkbox" name="fitness_goals" value="Muscle gain"> Muscle gain
+                <input type="checkbox" name="fitness_goals" value="Fat loss"> Fat loss
+                <input type="checkbox" name="fitness_goals" value="Endurance"> Endurance
+                <input type="checkbox" name="fitness_goals" value="Flexibility"> Flexibility
+                <br><br>
+                <div class="btn_box">
+                    <button type="button" class="btn-prev">Back</button>
+                    <button type="button" class="btn-next">Next</button>
+                </div>
+            </div>
 
-            <label for="equipment">Select the equipment you have available:</label><br>
-            <input type="checkbox" name="equipment" value="Dumbbells"> Dumbbells
-            <input type="checkbox" name="equipment" value="Resistance Bands"> Resistance Bands
-            <input type="checkbox" name="equipment" value="Pull-up Bar"> Pull-up Bar
-            <input type="checkbox" name="equipment" value="Kettlebells"> Kettlebells
-            <input type="checkbox" name="equipment" value="Treadmill"> Treadmill
-            <input type="checkbox" name="equipment" value="Exercise Bike"> Exercise Bike
-            <br><br>
-
-            <label for="injuries">Enter any injuries or physical limitations:</label><br>
-            <textarea id="injuries" name="injuries" placeholder="e.g., lower back pain"></textarea><br><br>
-
-            <label for="exercise_preferences">Enter any exercise preferences:</label><br>
-            <textarea id="exercise_preferences" name="exercise_preferences" placeholder="e.g., prefer push-ups, dislike burpees"></textarea><br><br>
-
-            <button type="submit">Generate</button>
+            <!-- Step 4 -->
+            <div class="form-step">
+                <h2 class="form-step-title">Additional</h2>
+                <label for="equipment">Select the equipment you have available:</label><br>
+                <input type="checkbox" name="equipment" value="Dumbbells"> Dumbbells
+                <input type="checkbox" name="equipment" value="Resistance Bands"> Resistance Bands
+                <input type="checkbox" name="equipment" value="Pull-up Bar"> Pull-up Bar
+                <input type="checkbox" name="equipment" value="Kettlebells"> Kettlebells
+                <input type="checkbox" name="equipment" value="Treadmill"> Treadmill
+                <input type="checkbox" name="equipment" value="Exercise Bike"> Exercise Bike
+                <br><br>
+                <label for="injuries">Enter any injuries or physical limitations:</label><br>
+                <textarea id="injuries" name="injuries" placeholder="e.g., lower back pain"></textarea><br><br>
+                <label for="exercise_preferences">Enter any exercise preferences:</label><br>
+                <textarea id="exercise_preferences" name="exercise_preferences" placeholder="e.g., prefer push-ups, dislike burpees"></textarea><br><br>
+                <button type="button" class="btn-prev">Back</button>
+                <button type="submit">Generate</button>
+            </div>
         </form>
 
         <div id="response"></div>

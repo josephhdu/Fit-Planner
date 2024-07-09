@@ -18,14 +18,14 @@ header {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Align items to the start */
+    justify-content: flex-start;
 }
 
 .header-container {
     display: flex;
     align-items: center;
     width: 100%;
-    padding-left: 20px; /* Add some padding if necessary */
+    padding-left: 20px;
 }
 
 .header-logo {
@@ -85,45 +85,6 @@ p {
     background-color: #0056b3;
 }
 
-/* Splash screen */
-.splash {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #ffffff;
-    z-index: 200;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 1s ease-in-out;
-    opacity: 1;
-}
-
-.splash.display-none {
-    opacity: 0;
-    pointer-events: none;
-    z-index: -10;
-}
-
-.splash img {
-    max-width: 300px;
-    max-height: 300px;
-}
-
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
-}
-
-.fade-in {
-    opacity: 0;
-    animation: fadeIn 1s ease-in forwards;
-}
-
 /* Form styles */
 form {
     display: inline-block;
@@ -165,17 +126,34 @@ button {
     border-radius: 8px;
     font-size: 1rem;
     transition: background-color 0.3s;
+    margin: 5px; /* Add some margin for spacing between buttons */
 }
 
 button:hover {
     background-color: #45a049;
 }
 
+button.btn-next {
+    background-color: #007bff;
+}
+
+button.btn-next:hover {
+    background-color: #0056b3;
+}
+
+button.btn-prev {
+    background-color: #6c757d;
+}
+
+button.btn-prev:hover {
+    background-color: #5a6268;
+}
+
 #response {
     margin-top: 20px;
     font-size: 1rem;
     color: #333;
-    white-space: pre-wrap; /* preserve whitespace formatting */
+    white-space: pre-wrap;
 }
 
 .muscle-groups {
@@ -194,4 +172,87 @@ button:hover {
 /* Hidden content */
 .hidden {
     display: none;
+}
+
+/* Multi-step form */
+.form-step {
+    display: none;
+}
+
+.form-step-active {
+    display: block;
+}
+
+/* Progress bar */
+.progressbar {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem auto;
+    position: relative;
+}
+
+.progressbar::before {
+    content: "";
+    background-color: #ccc;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 4px;
+    width: 100%;
+    z-index: 1;
+}
+
+.progress {
+    background-color: #007bff;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 4px;
+    width: 0%;
+    z-index: 1;
+    transition: 0.4s ease-in;
+}
+
+.progress-step {
+    background-color: #ccc;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    z-index: 2;
+    transition: 0.4s ease;
+    position: relative;
+}
+
+.progress-step::before {
+    content: attr(data-step);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    color: #333;
+}
+
+.progress-step-active::before {
+    color: #fff;
+}
+
+.progress-step-active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Form step titles */
+.form-step-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
 }
