@@ -8,8 +8,23 @@
     <link rel="stylesheet" href="{% static 'workouts/style.css' %}">
 </head>
 <body>
-    <h1>Welcome to Fit Planner</h1>
-    <p>Your personalized workout routine planner.</p>
+    <div class="splash">
+        <img src="{% static 'workouts/photo_icons/logo.png' %}" alt="Fit Planner Logo" class="fade-in">
+    </div>
+    <div id="main-content" class="hidden">
+        <header>
+            <div class="container">
+                <img src="{% static 'workouts/photo_icons/logo.png' %}" alt="Fit Planner Logo" class="header-logo">
+            </div>
+        </header>
+        <main>
+            <div class="welcome-container">
+                <h2>Welcome to Fit Planner</h2>
+                <p>We make it easy to create and track a workout plan designed just for you. Answer a few questions to get started!</p>
+                <button class="get-started-btn">Get started</button>
+            </div>
+        </main>
+    </div>
     <script src="{% static 'workouts/scripts.js' %}"></script>
 </body>
 </html>
