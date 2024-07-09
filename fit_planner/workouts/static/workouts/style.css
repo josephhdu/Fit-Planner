@@ -1,38 +1,44 @@
-.hidden {
-    display: none;
-}
-
+/* General styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #e0e0e0;
     display: flex;
     flex-direction: column;
+    color: #333;
 }
 
+/* Header */
 header {
     width: 100%;
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the start */
 }
 
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+.header-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    width: 100%;
+    padding-left: 20px; /* Add some padding if necessary */
 }
 
 .header-logo {
     max-height: 50px;
-    margin-right: auto;
+    margin-right: 10px;
 }
 
+.header-title {
+    font-size: 2rem;
+    color: #333;
+}
+
+/* Main content */
 main {
     flex: 1;
     display: flex;
@@ -44,107 +50,51 @@ main {
 
 .welcome-container {
     text-align: center;
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+    max-width: 600px;
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 20px;
+    color: #333;
 }
 
 p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-bottom: 30px;
+    color: #666;
 }
 
 .get-started-btn {
     padding: 15px 30px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .get-started-btn:hover {
     background-color: #0056b3;
 }
 
-form {
-    display: inline-block;
-    text-align: left;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-label {
-    font-weight: bold;
-    display: block;
-    margin: 10px 0 5px;
-}
-
-input[type="checkbox"],
-input[type="number"],
-select,
-textarea {
-    margin: 5px 0 10px;
-    padding: 8px;
-    width: 100%;
-    max-width: 300px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-#response {
-    margin-top: 20px;
-    font-size: 16px;
-    color: #333;
-    white-space: pre-wrap; /* preserve whitespace formatting */
-}
-
-.muscle-groups {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.muscle-groups label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
+/* Splash screen */
 .splash {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background: white;
+    background: #ffffff;
     z-index: 200;
-    color: black;
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -172,4 +122,76 @@ button:hover {
 .fade-in {
     opacity: 0;
     animation: fadeIn 1s ease-in forwards;
+}
+
+/* Form styles */
+form {
+    display: inline-block;
+    text-align: left;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+input[type="checkbox"],
+input[type="number"],
+select,
+textarea {
+    margin: 5px 0 10px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#response {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #333;
+    white-space: pre-wrap; /* preserve whitespace formatting */
+}
+
+.muscle-groups {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.muscle-groups label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Hidden content */
+.hidden {
+    display: none;
 }
