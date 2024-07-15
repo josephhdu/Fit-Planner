@@ -40,59 +40,120 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevButtons = document.querySelectorAll('.btn-prev');
     const progress = document.getElementById('progress');
     const progressSteps = document.querySelectorAll('.progress-step');
+    const toastContainer = document.createElement('div');
+    toastContainer.id = 'toast-container';
+    document.body.appendChild(toastContainer);
 
     let currentStep = 0;
 
-    if (nextButtons) {
-        nextButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                if (steps[currentStep]) {
-                    steps[currentStep].classList.remove('form-step-active');
-                    console.log(`Step ${currentStep} deactivated`);
-                }
-                currentStep++;
-                if (steps[currentStep]) {
-                    steps[currentStep].classList.add('form-step-active');
-                    console.log(`Step ${currentStep} activated`);
-                }
-                updateProgress();
-            });
+    nextButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (!validateStep(currentStep)) {
+                showToast('Please select at least one option before proceeding.');
+                return;
+            }
+            steps[currentStep].classList.remove('form-step-active');
+            currentStep++;
+            steps[currentStep].classList.add('form-step-active');
+            updateProgress();
         });
+    });
+
+    prevButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            steps[currentStep].classList.remove('form-step-active');
+            currentStep--;
+            steps[currentStep].classList.add('form-step-active');
+            updateProgress();
+        });
+    });
+
+    function validateStep(step) {
+        const currentFormStep = steps[step];
+        const checkboxes = currentFormStep.querySelectorAll('input[type="checkbox"]');
+        const numberInputs = currentFormStep.querySelectorAll('input[type="number"]');
+        const textInputs = currentFormStep.querySelectorAll('textarea, input[type="text"]');
+        const selectInputs = currentFormStep.querySelectorAll('select');
+
+        let checkboxChecked = false;
+        let numberInputFilled = false;
+        let allTextInputsFilled = true; // Change to check if all text inputs are filled
+        let selectInputFilled = false;
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                checkboxChecked = true;
+            }
+        });
+
+        numberInputs.forEach(input => {
+            if (input.value && !isNaN(input.value) && input.value > 0) {
+                numberInputFilled = true;
+            }
+        });
+
+        textInputs.forEach(input => {
+            if (input.value.trim() === '') {
+                allTextInputsFilled = false;
+            }
+        });
+
+        selectInputs.forEach(select => {
+            if (select.value) {
+                selectInputFilled = true;
+            }
+        });
+
+        console.log(`Step ${step} validation:`);
+        console.log(`checkboxChecked: ${checkboxChecked}`);
+        console.log(`numberInputFilled: ${numberInputFilled}`);
+        console.log(`allTextInputsFilled: ${allTextInputsFilled}`);
+        console.log(`selectInputFilled: ${selectInputFilled}`);
+
+        if (step === 0) {
+            return checkboxChecked;
+        } else if (step === 1) {
+            return numberInputFilled && checkboxChecked;
+        } else if (step === 2) {
+            return selectInputFilled && checkboxChecked;
+        } else if (step === 3) {
+            return checkboxChecked && allTextInputsFilled; // All text inputs must be filled
+        } else {
+            return checkboxChecked || allTextInputsFilled || selectInputFilled;
+        }
     }
 
-    if (prevButtons) {
-        prevButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                if (steps[currentStep]) {
-                    steps[currentStep].classList.remove('form-step-active');
-                    console.log(`Step ${currentStep} deactivated`);
-                }
-                currentStep--;
-                if (steps[currentStep]) {
-                    steps[currentStep].classList.add('form-step-active');
-                    console.log(`Step ${currentStep} activated`);
-                }
-                updateProgress();
-            });
-        });
+    function showToast(message, duration = 5000) {
+        let box = document.createElement('div');
+        box.classList.add('toast', 'toast-warning');
+        box.innerHTML = `
+            <div class="toast-content-wrapper">
+                <div class="toast-message">${message}</div>
+                <div class="toast-progress"></div>
+            </div>
+        `;
+        duration = duration || 5000;
+        box.querySelector('.toast-progress').style.animationDuration = `${duration / 1000}s`;
+
+        let toastAlready = document.body.querySelector('.toast');
+        if (toastAlready) {
+            toastAlready.remove();
+        }
+
+        document.body.appendChild(box);
     }
 
     function updateProgress() {
         progressSteps.forEach((step, index) => {
             if (index < currentStep + 1) {
                 step.classList.add('progress-step-active');
-                console.log(`Progress step ${index} activated`);
             } else {
                 step.classList.remove('progress-step-active');
-                console.log(`Progress step ${index} deactivated`);
             }
         });
 
         const activeSteps = document.querySelectorAll('.progress-step-active');
-        if (progress) {
-            progress.style.width = ((activeSteps.length - 1) / (progressSteps.length - 1)) * 100 + '%';
-            console.log(`Progress bar updated to ${progress.style.width}`);
-        }
+        progress.style.width = ((activeSteps.length - 1) / (progressSteps.length - 1)) * 100 + '%';
     }
 
     // Add event listener for form submission
@@ -101,6 +162,11 @@ document.addEventListener('DOMContentLoaded', function() {
         preferencesForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             console.log('Preferences form submitted');
+
+            if (!validateStep(currentStep)) {
+                showToast('Please select at least one option before proceeding.');
+                return;
+            }
 
             const formData = new FormData(this);
             const formObj = {};
