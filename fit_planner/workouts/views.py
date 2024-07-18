@@ -19,6 +19,9 @@ def index(request):
 def preferences(request):
     return render(request, 'workouts/preferences.html')
 
+def workout_plan(request):
+    return render(request, 'workouts/workout_plan.html')
+
 # Initialize InferenceClient
 repo_id = "microsoft/Phi-3-mini-4k-instruct"
 hf_token = settings.HUGGING_FACE_API_KEY

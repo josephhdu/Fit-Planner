@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded and parsed');
+
     const splash = document.querySelector('.splash');
     const mainContent = document.getElementById('main-content');
     const getStartedBtn = document.querySelector('.get-started-btn');
+    const loadingScreen = document.getElementById('loading-screen');
 
     if (splash) {
         console.log('Splash screen found');
@@ -49,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     nextButtons.forEach(button => {
         button.addEventListener('click', () => {
             if (!validateStep(currentStep)) {
-                showToast('Please select at least one option before proceeding.');
+                showToast('Please fill out all necessary fields before proceeding.');
                 return;
             }
             steps[currentStep].classList.remove('form-step-active');
@@ -168,6 +170,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+            // Show loading screen and disable scrolling
+            if (loadingScreen) {
+                loadingScreen.classList.remove('hidden');
+                document.body.classList.add('no-scroll');
+            }
+
             const formData = new FormData(this);
             const formObj = {};
 
@@ -183,21 +191,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log('Form data:', formObj);
 
-            const response = await fetch('/generate-workout/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')  // Ensure CSRF token is sent with the request
-                },
-                body: JSON.stringify(formObj)
-            });
+            try {
+                const response = await fetch('/generate-workout/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')  // Ensure CSRF token is sent with the request
+                    },
+                    body: JSON.stringify(formObj)
+                });
 
-            const data = await response.json();
-            console.log('Generated Workout Routine:', data.generated_text);
-            const responseElement = document.getElementById('response');
-            if (responseElement) {
-                responseElement.innerText = data.generated_text;
-                console.log('Response displayed');
+                const data = await response.json();
+                console.log('Generated Workout Routine:', data.generated_text);
+
+                // Store the generated workout in localStorage
+                localStorage.setItem('generatedWorkout', data.generated_text);
+
+                // Hide loading screen, enable scrolling, and redirect to new page
+                document.body.classList.remove('no-scroll');
+                window.location.href = '/workout-plan/';
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('An error occurred. Please try again.');
+
+                // Hide loading screen and enable scrolling
+                if (loadingScreen) {
+                    loadingScreen.classList.add('hidden');
+                    document.body.classList.remove('no-scroll');
+                }
             }
         });
     } else {

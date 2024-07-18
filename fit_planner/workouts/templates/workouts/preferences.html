@@ -6,6 +6,7 @@
     <title>Preferences Form</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'workouts/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -18,12 +19,12 @@
         <!-- Progress Bar -->
         <div class="progressbar">
             <div class="progress" id="progress"></div>
-            <div class="progress-step progress-step-active" data-title="Schedule" data-step="1"></div>
-            <div class="progress-step" data-title="Preferences" data-step="2"></div>
-            <div class="progress-step" data-title="Goals" data-step="3"></div>
-            <div class="progress-step" data-title="Additional" data-step="4"></div>
+            <div class="progress-step progress-step-active" data-title="Schedule"><i class="fas fa-calendar-alt"></i></div>
+            <div class="progress-step" data-title="Preferences"><i class="fas fa-cogs"></i></div>
+            <div class="progress-step" data-title="Goals"><i class="fas fa-bullseye"></i></div>
+            <div class="progress-step" data-title="Additional"><i class="fas fa-plus-circle"></i></div>
         </div>
-
+        
         <!-- Preferences Form -->
         <form id="preferences-form">
             <!-- Step 1 -->
@@ -114,6 +115,11 @@
         </form>
 
         <div id="response"></div>
+
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="loading-screen hidden">
+            <div class="spinner"></div>
+        </div>
     </main>
 
     <script src="{% static 'workouts/scripts.js' %}"></script>
