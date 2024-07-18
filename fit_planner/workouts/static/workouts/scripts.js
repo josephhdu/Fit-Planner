@@ -1,10 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded and parsed');
 
+    window.addEventListener('popstate', function(event) {
+        history.pushState(null, null, location.href);
+    });
+
+    window.history.pushState(null, null, location.href);
+
     const splash = document.querySelector('.splash');
     const mainContent = document.getElementById('main-content');
     const getStartedBtn = document.querySelector('.get-started-btn');
-    const loadingScreen = document.getElementById('loading-screen');
+    const loadingScreen = document.getElementById('loader3');
 
     if (splash) {
         console.log('Splash screen found');
@@ -166,13 +172,13 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Preferences form submitted');
 
             if (!validateStep(currentStep)) {
-                showToast('Please select at least one option before proceeding.');
+                showToast('Please fill out all necessary fields before proceeding.');
                 return;
             }
 
             // Show loading screen and disable scrolling
             if (loadingScreen) {
-                loadingScreen.classList.remove('hidden');
+                loadingScreen.style.visibility = 'visible'; // Updated this line
                 document.body.classList.add('no-scroll');
             }
 
@@ -208,6 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('generatedWorkout', data.generated_text);
 
                 // Hide loading screen, enable scrolling, and redirect to new page
+                loadingScreen.style.visibility = 'hidden'; // Updated this line
                 document.body.classList.remove('no-scroll');
                 window.location.href = '/workout-plan/';
             } catch (error) {
@@ -216,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Hide loading screen and enable scrolling
                 if (loadingScreen) {
-                    loadingScreen.classList.add('hidden');
+                    loadingScreen.style.visibility = 'hidden'; // Updated this line
                     document.body.classList.remove('no-scroll');
                 }
             }

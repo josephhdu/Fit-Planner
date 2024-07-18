@@ -80,10 +80,50 @@
                 </select><br><br>
                 <label for="fitness_goals">Select your fitness goals:</label><br>
                 <div class="checkbox-group">
-                    <label><input type="checkbox" name="fitness_goals" value="Muscle gain"> Muscle gain</label>
-                    <label><input type="checkbox" name="fitness_goals" value="Fat loss"> Fat loss</label>
-                    <label><input type="checkbox" name="fitness_goals" value="Endurance"> Endurance</label>
-                    <label><input type="checkbox" name="fitness_goals" value="Flexibility"> Flexibility</label>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="fitness_goals" value="Muscle gain" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/muscle_gain.png' %}" alt="Muscle Gain" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Muscle gain</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="fitness_goals" value="Fat loss" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/weight_loss.png' %}" alt="Fat Loss" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Fat loss</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="fitness_goals" value="Endurance" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/endurance.png' %}" alt="Endurance" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Endurance</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="fitness_goals" value="Flexibility" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/flexibility.png' %}" alt="Flexibility" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Flexibility</span>
+                            </span>
+                        </label>
+                    </div>
                 </div>
                 <br><br>
                 <div class="btn_box">
@@ -117,10 +157,19 @@
         <div id="response"></div>
 
         <!-- Loading Screen -->
-        <div id="loading-screen" class="loading-screen hidden">
-            <div class="spinner"></div>
-        </div>
-    </main>
+        <div class="loader3" id="loader3">
+            <div class="bars bar1"></div>
+            <div class="bars bar2"></div>
+            <div class="bars bar3"></div>
+            <div class="bars bar4"></div>
+            <div class="bars bar5"></div>
+            <div class="bars bar6"></div>
+            <div class="bars bar7"></div>
+            <div class="bars bar8"></div>
+            <div class="bars bar9"></div>
+            <div class="bars bar10"></div>
+          </div>
+          
 
     <script src="{% static 'workouts/scripts.js' %}"></script>
 </body>
