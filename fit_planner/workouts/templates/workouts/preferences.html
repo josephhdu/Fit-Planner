@@ -137,12 +137,72 @@
                 <h2 class="form-step-title">Additional</h2>
                 <label for="equipment">Select the equipment you have available:</label><br>
                 <div class="checkbox-group">
-                    <label><input type="checkbox" name="equipment" value="Dumbbells"> Dumbbells</label>
-                    <label><input type="checkbox" name="equipment" value="Resistance Bands"> Resistance Bands</label>
-                    <label><input type="checkbox" name="equipment" value="Pull-up Bar"> Pull-up Bar</label>
-                    <label><input type="checkbox" name="equipment" value="Kettlebells"> Kettlebells</label>
-                    <label><input type="checkbox" name="equipment" value="Treadmill"> Treadmill</label>
-                    <label><input type="checkbox" name="equipment" value="Exercise Bike"> Exercise Bike</label>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="equipment" value="Dumbbells" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/dumbbells.png' %}" alt="Dumbbells" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Dumbbells</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="equipment" value="Resistance Bands" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/resistance_bands.png' %}" alt="Resistance Bands" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Resistance Bands</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="equipment" value="Pull-up Bar" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/pullup.png' %}" alt="Pull-up Bar" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Pull-up Bar</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="equipment" value="Kettlebells" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/kettlebells.png' %}" alt="Kettlebells" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Kettlebells</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="equipment" value="Treadmill" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/treadmill.png' %}" alt="Treadmill" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Treadmill</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="equipment" value="Exercise Bike" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/exercise_bike.png' %}" alt="Exercise Bike" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Exercise Bike</span>
+                            </span>
+                        </label>
+                    </div>
                 </div>
                 <br><br>
                 <label for="injuries">Enter any injuries or physical limitations:</label><br>
@@ -168,7 +228,7 @@
             <div class="bars bar8"></div>
             <div class="bars bar9"></div>
             <div class="bars bar10"></div>
-          </div>
+        </div>
           
 
     <script src="{% static 'workouts/scripts.js' %}"></script>

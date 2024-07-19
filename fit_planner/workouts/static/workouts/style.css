@@ -346,37 +346,14 @@ button.btn-prev:hover {
     color: #000000; 
     padding: 0.5rem; 
 } 
-  
-.toast.toast-success { 
-    background: #95eab8; 
-} 
-  
-.toast.toast-success .toast-progress { 
-    background-color: #2ecc71; 
-} 
-  
-.toast.toast-danger { 
-    background: #efaca5; 
-} 
-  
-.toast.toast-danger .toast-progress { 
-    background-color: #e74c3c; 
-} 
-  
-.toast.toast-info { 
-    background: #bddaed; 
-} 
-  
-.toast.toast-info .toast-progress { 
-    background-color: #3498db; 
-} 
+
   
 .toast.toast-warning { 
-    background: #ead994; 
+    background: #3498db; 
 } 
   
 .toast.toast-warning .toast-progress { 
-    background-color: #f1c40f; 
+    background-color: #007bff; 
 } 
   
 @keyframes slideInRight { 
@@ -522,11 +499,20 @@ button.btn-prev:hover {
     overflow: hidden;
 }
 
-.checkbox-wrapper {
+/* Update checkbox styles */
+.checkbox-group {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 10px; /* Adjust the gap between buttons as needed */
+}
+
+.checkbox-wrapper {
+    flex: 0 1 calc(50% - 10px); /* Take up half the width of the container, minus the gap */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+    display: inline-flex; /* Ensure the wrapper takes up only as much space as its content */
     cursor: pointer;
+    position: relative;
+    padding: 0; /* Remove any default padding */
 }
 
 .checkbox-input {
@@ -536,12 +522,15 @@ button.btn-prev:hover {
 .checkbox-tile {
     display: flex;
     align-items: center;
+    justify-content: center; /* Center the content horizontally */
     gap: 10px;
     padding: 10px;
     border: 2px solid #ccc;
     border-radius: 5px;
     transition: background-color 0.3s, border-color 0.3s;
     cursor: pointer;
+    width: 100%; /* Make the tile take up the full width of the wrapper */
+    text-align: center; /* Center the text */
 }
 
 .checkbox-input:checked + .checkbox-tile {
