@@ -51,6 +51,15 @@ def generate_workout(request):
         equipment = input_data.get("equipment", ["dumbbells", "resistance bands", "pull-up bar"])
         injuries = input_data.get("injuries", "none")
         exercise_preferences = input_data.get("exercise_preferences", "none")
+        
+        logger.info(f"User Schedule: {user_schedule}")
+        logger.info(f"workout_duration: {workout_duration}")
+        logger.info(f"Workout Areas: {workout_areas}")
+        logger.info(f"Fitness level: {fitness_level}")
+        logger.info(f"Fitness Goals: {fitness_goals}")
+        logger.info(f"Equipment: {equipment}")
+        logger.info(f"ingjuries: {injuries}")
+        logger.info(f"exercise_preferences: {exercise_preferences}")
 
         prompt = (
             f"Generate a personalized workout routine based on the following preferences:\n"
