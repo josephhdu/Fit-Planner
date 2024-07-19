@@ -1,23 +1,14 @@
-# test_llm.py
-from huggingface_hub import InferenceClient
-import json
-
-# Initialize InferenceClient
-repo_id = "microsoft/Phi-3-mini-4k-instruct"
-hf_token = "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"
-llm_client = InferenceClient(model=repo_id, token=hf_token, timeout=300)
+import google.generativeai as genai
 
 
-# Function to call the language model
-def call_llm(inference_client: InferenceClient, prompt: str, max_length=200):
-    response = inference_client.post(
-        json={
-            "inputs": prompt,
-            "parameters": {"max_new_tokens": max_length},
-            "task": "text-generation",
-        },
-    )
-    return json.loads(response.decode())[0]["generated_text"]
+# Configure the API key
+api_key = "AIzaSyD4tm7M06QqxMfGdXBXd92YN0ey2aQ_B78"
+genai.configure(api_key=api_key)
+
+# Initialize the model
+model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+
+
 
 # Test the function with hard-coded continuation
 if __name__ == "__main__":
@@ -38,19 +29,17 @@ if __name__ == "__main__":
         "3. Equipment Usage: Specify how the available equipment will be used.\n"
         "4. Additional Tips: Provide tips based on fitness level and goals.\n\n"
     )
-
-    # First API call
-    generated_text = call_llm(llm_client, test_prompt)
-    print("Generated Text Part 1:", generated_text)
-
-    # Prepare second prompt including the initial instructions
-    continuation_prompt = (
-        "\nKeep going from here:\n"
+    
+    test_prompt2 = (
+        "Generate a list of exercises specifically targeting the chest muscle group. Consider the following preferences:\n"
+        "1. Workout Duration: 45 minutes\n"
+        "2. Fitness Level: Intermediate\n"
+        "3. Fitness Goals: Muscle gain\n"
+        "4. Available Equipment: Dumbbells, resistance bands, bench\n\n"
+        "Please provide the exercises in a structured format, including the name of each exercise, and the number of sets\n"
+        "End the list with the word 'END'."
     )
+    
 
-    # Second API call
-    generated_text_continued = call_llm(llm_client, continuation_prompt)
-    print("Generated Text Part 2:", generated_text_continued)
-
-    # Combine both parts
-    #full_generated_text = generated_text + generated_
+    response = model.generate_content(test_prompt)
+    print("Generated Text:", response.text)
