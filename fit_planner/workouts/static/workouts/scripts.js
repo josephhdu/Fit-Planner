@@ -210,8 +210,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const data = await response.json();
                 console.log('Generated Workout Routine:', data.generated_text);
 
-                // Store the generated workout in localStorage
-                localStorage.setItem('generatedWorkout', data.generated_text);
+                // // Store the generated workout in localStorage
+                // localStorage.setItem('generatedWorkout', data.generated_text);
+                localStorage.setItem('generatedWorkout', JSON.stringify(data));
 
                 // Hide loading screen, enable scrolling, and redirect to new page
                 loadingScreen.style.visibility = 'hidden'; // Updated this line
