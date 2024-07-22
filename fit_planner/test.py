@@ -1,4 +1,6 @@
 import google.generativeai as genai
+import re
+import json
 
 
 # Configure the API key
@@ -9,37 +11,107 @@ genai.configure(api_key=api_key)
 model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 
+def parse_workout_schedule(text):
+    workout_schedule = []
+    day_pattern = re.compile(r"- Day: (\w+)")
+    exercise_start_pattern = re.compile(r"Main exercises:")
+    exercise_pattern = re.compile(r"- (.*?), Sets: (.*?), Reps: (.*?), Duration: (.*)")
 
-# Test the function with hard-coded continuation
+    days = text.split("- Day: ")[1:]
+    for day in days:
+        day_lines = day.strip().split("\n")
+        day_name = day_lines[0].strip()
+        exercises = []
+        
+        # Find the line with "Main exercises:"
+        start_index = None
+        for i, line in enumerate(day_lines):
+            if exercise_start_pattern.search(line):
+                start_index = i + 1
+                break
+        
+        if start_index is not None:
+            for line in day_lines[start_index:]:
+                match = exercise_pattern.match(line.strip())
+                if match:
+                    exercise_name = match.group(1).strip()
+                    sets = match.group(2).strip()
+                    reps = match.group(3).strip()
+                    duration = match.group(4).strip()
+                    exercises.append({
+                        "exercise": exercise_name,
+                        "sets": sets,
+                        "reps": reps,
+                        "duration": duration
+                    })
+
+        workout_schedule.append({
+            "day": day_name,
+            "exercises": exercises
+        })
+
+    return json.dumps(workout_schedule, indent=2)
+
+def generate_prompt(gender, age, schedule, target_areas, duration, fitness_level, goals, equipment):
+    prompt = (
+        "Generate a personalized workout routine based on the following preferences:\n\n"
+        f"1. Gender: {gender}\n"
+        f"2. Age: {age}\n"
+        f"3. Preferred Schedule: {schedule}\n"
+        f"4. Target Areas: {target_areas}\n"
+        f"5. Preferred Duration: {duration}\n"
+        f"6. Fitness Level: {fitness_level}\n"
+        f"7. Fitness Goals: {goals}\n"
+        f"8. Available Equipment: {equipment}\n\n"
+        "Please structure the workout routine as follows, specifying the exercises for each day. "
+        "For each exercise, specify the name, sets, reps, and duration. "
+        "If the exercise is based on duration, specify 'N/A' for sets and reps."
+        "If the exercise is based on sets and reps, specify 'N/A' for duration."
+        "Please avoid adding any extra details and only add things that are asked. "
+        "Do not use any markdown formatting in your response. Only use plain text.\n\n"
+        "Example:\n"
+        "- Day: Monday\n"
+        "  - Main exercises:\n"
+        "    - Bench Press, Sets: 4, Reps: 8-12, Duration: N/A\n"
+        "    - Dumbbell Incline Press, Sets: 3, Reps: 10-15, Duration: N/A\n"
+        "    - Dumbbell Flyes, Sets: 3, Reps: 12-15, Duration: N/A\n"
+        "    - Triceps Pushdowns (resistance band), Sets: 3, Reps: 15-20, Duration: N/A\n"
+        "    - Overhead Triceps Extension, Sets: 3, Reps: 12-15, Duration: N/A\n"
+        "    - Treadmill, Sets: N/A, Reps: N/A, Duration: 20 minutes\n"
+    )
+    return prompt
+
 if __name__ == "__main__":
-    test_prompt = (
-        "Generate a personalized workout routine based on the following preferences:\n"
-        "1. Schedule: Monday, Wednesday, Friday\n"
-        "2. Workout Duration: 45 minutes\n"
-        "3. Preferred Workout Areas: chest, triceps, legs\n"
-        "4. Fitness Level: intermediate\n"
-        "5. Fitness Goals: muscle gain, fat loss\n"
-        "6. Available Equipment: dumbbells, resistance bands, pull-up bar\n\n"
-        "Please structure the response as follows:\n"
-        "1. Weekly Schedule: List the days and corresponding workouts.\n"
-        "2. Detailed Workouts: For each workout, include:\n"
-        "    a. Warm-up exercises\n"
-        "    b. Main exercises (with sets and reps)\n"
-        "    c. Cool-down exercises\n"
-        "3. Equipment Usage: Specify how the available equipment will be used.\n"
-        "4. Additional Tips: Provide tips based on fitness level and goals.\n\n"
+    
+    # Example user input
+    user_input = {
+        "gender": "Female",
+        "age": 35,
+        "schedule": "Monday, Tuesday, Thursday, Saturday",
+        "target_areas": "Triceps, Biceps, Legs, Cardio, Back",
+        "duration": "30 minutes",
+        "fitness_level": "Intermediate",
+        "goals": "Muscle gain",
+        "equipment": "Dumbbells, resistance bands, bench, Treadmill"
+    }
+    
+    prompt = generate_prompt(
+        gender=user_input["gender"],
+        age=user_input["age"],
+        schedule=user_input["schedule"],
+        target_areas=user_input["target_areas"],
+        duration=user_input["duration"],
+        fitness_level=user_input["fitness_level"],
+        goals=user_input["goals"],
+        equipment=user_input["equipment"]
     )
     
-    test_prompt2 = (
-        "Generate a list of exercises specifically targeting the chest muscle group. Consider the following preferences:\n"
-        "1. Workout Duration: 45 minutes\n"
-        "2. Fitness Level: Intermediate\n"
-        "3. Fitness Goals: Muscle gain\n"
-        "4. Available Equipment: Dumbbells, resistance bands, bench\n\n"
-        "Please provide the exercises in a structured format, including the name of each exercise, and the number of sets\n"
-        "End the list with the word 'END'."
-    )
+    response = model.generate_content(prompt)
     
-
-    response = model.generate_content(test_prompt)
-    print("Generated Text:", response.text)
+    # Extract the text content from the response
+    generated_text = response.text  
+    print("Generated Text:", generated_text)
+    
+    parsed_response = parse_workout_schedule(generated_text)
+    print(parsed_response)
+    
