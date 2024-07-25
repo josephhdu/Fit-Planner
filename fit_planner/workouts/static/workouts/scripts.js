@@ -80,12 +80,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentFormStep = steps[step];
         const checkboxes = currentFormStep.querySelectorAll('input[type="checkbox"]');
         const numberInputs = currentFormStep.querySelectorAll('input[type="number"]');
+        const rangeInputs = currentFormStep.querySelectorAll('input[type="range"]');
         const textInputs = currentFormStep.querySelectorAll('textarea, input[type="text"]');
         const selectInputs = currentFormStep.querySelectorAll('select');
 
         let checkboxChecked = false;
         let numberInputFilled = false;
-        let allTextInputsFilled = true; // Change to check if all text inputs are filled
+        let rangeInputFilled = false;
+        let allTextInputsFilled = true;
         let selectInputFilled = false;
 
         checkboxes.forEach(checkbox => {
@@ -97,6 +99,12 @@ document.addEventListener('DOMContentLoaded', function() {
         numberInputs.forEach(input => {
             if (input.value && !isNaN(input.value) && input.value > 0) {
                 numberInputFilled = true;
+            }
+        });
+
+        rangeInputs.forEach(input => {
+            if (input.value && !isNaN(input.value) && input.value > 0) {
+                rangeInputFilled = true;
             }
         });
 
@@ -115,19 +123,22 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`Step ${step} validation:`);
         console.log(`checkboxChecked: ${checkboxChecked}`);
         console.log(`numberInputFilled: ${numberInputFilled}`);
+        console.log(`rangeInputFilled: ${rangeInputFilled}`);
         console.log(`allTextInputsFilled: ${allTextInputsFilled}`);
         console.log(`selectInputFilled: ${selectInputFilled}`);
 
         if (step === 0) {
-            return checkboxChecked;
+            return selectInputFilled && rangeInputFilled; // Personal information requires both fields
         } else if (step === 1) {
-            return numberInputFilled && checkboxChecked;
+            return checkboxChecked;
         } else if (step === 2) {
-            return selectInputFilled && checkboxChecked;
+            return rangeInputFilled && checkboxChecked;
         } else if (step === 3) {
-            return checkboxChecked && allTextInputsFilled; // All text inputs must be filled
+            return selectInputFilled && checkboxChecked;
+        } else if (step === 4) {
+            return checkboxChecked; // Only checkboxes need to be filled
         } else {
-            return checkboxChecked || allTextInputsFilled || selectInputFilled;
+            return checkboxChecked || rangeInputFilled || selectInputFilled;
         }
     }
 
@@ -210,8 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const data = await response.json();
                 console.log('Generated Workout Routine:', data.generated_text);
 
-                // // Store the generated workout in localStorage
-                // localStorage.setItem('generatedWorkout', data.generated_text);
+                // Store the generated workout in localStorage
                 localStorage.setItem('generatedWorkout', JSON.stringify(data));
 
                 // Hide loading screen, enable scrolling, and redirect to new page
