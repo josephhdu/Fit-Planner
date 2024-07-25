@@ -6,6 +6,7 @@ import google.generativeai as genai
 import json
 import logging
 import re
+import requests
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -17,6 +18,10 @@ genai.configure(api_key=api_key)
 
 # Initialize the model
 model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+
+#search API keys stuff
+search_api_key = "AIzaSyDGhroIdnOwgZs3whnjetveoiKpWhr7IAA"
+search_engine_ID = "a15a80858d20849b1"
 
 # View to render the index page
 def index(request):
@@ -34,6 +39,15 @@ def call_llm(prompt: str):
     response = model.generate_content(prompt)
     generated_text = response.text
     return generated_text
+
+def get_exercise_image(exercise_name):
+    url = f"https://www.googleapis.com/customsearch/v1?q={exercise_name}&searchType=image&key={search_api_key}&cx={search_engine_ID}"
+    response = requests.get(url)
+    data = response.json()
+    if 'items' in data:
+        return data['items'][0]['link']
+    else:
+        return None
 
 # Function to parse the workout schedule
 def parse_workout_schedule(text):
@@ -59,6 +73,40 @@ def parse_workout_schedule(text):
                     "sets": sets,
                     "reps": reps,
                     "duration": duration
+                })
+
+        workout_schedule.append({
+            "day": day_name,
+            "exercises": exercises
+        })
+
+    return workout_schedule
+
+def parse_workout_schedule_images(text):
+    workout_schedule = []
+    day_pattern = re.compile(r"- Day: (\w+)")
+    exercise_pattern = re.compile(r"- (.*?), Sets: (.*?), Reps: (.*?), Duration: (.*)")
+
+    days = text.split("- Day: ")[1:]
+    for day in days:
+        day_lines = day.strip().split("\n")
+        day_name = day_lines[0].strip()
+        exercises = []
+        
+        for line in day_lines[1:]:
+            match = exercise_pattern.match(line.strip())
+            if match:
+                exercise_name = match.group(1).strip()
+                sets = match.group(2).strip()
+                reps = match.group(3).strip()
+                duration = match.group(4).strip()
+                image_url = get_exercise_image(exercise_name)
+                exercises.append({
+                    "exercise": exercise_name,
+                    "sets": sets,
+                    "reps": reps,
+                    "duration": duration,
+                    "image": image_url
                 })
 
         workout_schedule.append({
