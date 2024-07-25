@@ -1,15 +1,28 @@
 import google.generativeai as genai
 import re
 import json
+import requests
 
 
 # Configure the API key
 api_key = "AIzaSyD4tm7M06QqxMfGdXBXd92YN0ey2aQ_B78"
 genai.configure(api_key=api_key)
 
+#search API keys stuff
+search_api_key = "AIzaSyDGhroIdnOwgZs3whnjetveoiKpWhr7IAA"
+search_engine_ID = "a15a80858d20849b1"
+
 # Initialize the model
 model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
+def get_exercise_image(exercise_name):
+    url = f"https://www.googleapis.com/customsearch/v1?q={exercise_name}&searchType=image&key={search_api_key}&cx={search_engine_ID}"
+    response = requests.get(url)
+    data = response.json()
+    if 'items' in data:
+        return data['items'][0]['link']
+    else:
+        return None
 
 def parse_workout_schedule(text):
     workout_schedule = []
@@ -83,35 +96,43 @@ def generate_prompt(gender, age, schedule, target_areas, duration, fitness_level
 
 if __name__ == "__main__":
     
-    # Example user input
-    user_input = {
-        "gender": "Female",
-        "age": 35,
-        "schedule": "Monday, Tuesday, Thursday, Saturday",
-        "target_areas": "Triceps, Biceps, Legs, Cardio, Back",
-        "duration": "30 minutes",
-        "fitness_level": "Intermediate",
-        "goals": "Muscle gain",
-        "equipment": "Dumbbells, resistance bands, bench, Treadmill"
-    }
+    # # Example user input
+    # user_input = {
+    #     "gender": "Female",
+    #     "age": 35,
+    #     "schedule": "Monday, Tuesday, Thursday, Saturday",
+    #     "target_areas": "Triceps, Biceps, Legs, Cardio, Back",
+    #     "duration": "30 minutes",
+    #     "fitness_level": "Intermediate",
+    #     "goals": "Muscle gain",
+    #     "equipment": "Dumbbells, resistance bands, bench, Treadmill"
+    # }
     
-    prompt = generate_prompt(
-        gender=user_input["gender"],
-        age=user_input["age"],
-        schedule=user_input["schedule"],
-        target_areas=user_input["target_areas"],
-        duration=user_input["duration"],
-        fitness_level=user_input["fitness_level"],
-        goals=user_input["goals"],
-        equipment=user_input["equipment"]
-    )
+    # prompt = generate_prompt(
+    #     gender=user_input["gender"],
+    #     age=user_input["age"],
+    #     schedule=user_input["schedule"],
+    #     target_areas=user_input["target_areas"],
+    #     duration=user_input["duration"],
+    #     fitness_level=user_input["fitness_level"],
+    #     goals=user_input["goals"],
+    #     equipment=user_input["equipment"]
+    # )
     
-    response = model.generate_content(prompt)
+    # response = model.generate_content(prompt)
     
-    # Extract the text content from the response
-    generated_text = response.text  
-    print("Generated Text:", generated_text)
+    # # Extract the text content from the response
+    # generated_text = response.text  
+    # print("Generated Text:", generated_text)
     
-    parsed_response = parse_workout_schedule(generated_text)
-    print(parsed_response)
+    # parsed_response = parse_workout_schedule(generated_text)
+    # print(parsed_response)
     
+    exercises = ["Dumbbell Chest Press (on floor)", "Dumbbell Pullovers", "Triceps Extensions (Kettlebell)"]
+    exercise_images = {}
+
+    for exercise in exercises:
+        image_url = get_exercise_image(exercise)
+        exercise_images[exercise] = image_url
+        print(f"{exercise}: {image_url}")
+

@@ -1,0 +1,15 @@
+# Ignore the virtual environment directory
+venv/
+
+# Ignore compiled files
+__pycache__/
+*.pyc
+
+# Ignore database file
+db.sqlite3
+
+# Ignore environment variables
+.env
+
+# Ignore system-specific files
+.DS_Store
