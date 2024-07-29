@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Plan</title>
-    {% load static %}
-    <script src="{% static 'workouts/workout_plan.js' %}"></script>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Workout Plan</title>
+   {% load static %}
+   <link rel="stylesheet" href="{% static 'workouts/workout_plan.css' %}">
+   <script src="{% static 'workouts/workout_plan.js' %}" defer></script>
 </head>
 <body>
-    <div class="container">
-        <p>Welcome!</p>
-    </div>
-
-    <div id="response"></div>
-    
-
+   <div class="container">
+       <header class="header">
+           <div class="logo">
+               <img src="{% static 'workouts/photo_icons/logo_background_removed.png' %}" alt="Fit Planner Logo">
+           </div>
+       </header>
+       <main class="main-content">
+           <section id="workout-overview" class="workout-overview">
+               <!-- Overview details will be dynamically added here -->
+           </section>
+           <section id="output" class="workout-details">
+               <!-- Workout details will be dynamically added here -->
+           </section>
+       </main>
+   </div>
 </body>
 </html>

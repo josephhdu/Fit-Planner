@@ -116,59 +116,77 @@ def parse_workout_schedule_images(text):
 
     return workout_schedule
 
-# Django view to handle the API call
 @csrf_exempt
 def generate_workout(request):
-    if request.method == 'POST':
-        input_data = json.loads(request.body)
-        gender = input_data.get("gender", "Male")
-        age = input_data.get("age", "25")
-        schedule = input_data.get("schedule", "Monday, Wednesday, Friday")
-        workout_areas = input_data.get("workout_areas", "chest, triceps, legs")
-        workout_duration = input_data.get("workout_duration", "45 minutes")
-        fitness_level = input_data.get("fitness_level", "intermediate")
-        fitness_goals = input_data.get("fitness_goals", "muscle gain, fat loss")
-        equipment = input_data.get("equipment", "dumbbells, resistance bands, pull-up bar")
+   if request.method == 'POST':
+       input_data = json.loads(request.body)
+       gender = input_data.get("gender", "Male")
+       age = input_data.get("age", "25")
+       schedule = input_data.get("schedule", ["Monday", "Wednesday", "Friday"])
+       workout_areas = input_data.get("workout_areas", ["chest", "triceps", "legs"])
+       workout_duration = input_data.get("workout_duration", "45 minutes")
+       fitness_level = input_data.get("fitness_level", "intermediate")
+       fitness_goals = input_data.get("fitness_goals", ["muscle gain", "fat loss"])
+       equipment = input_data.get("equipment", ["dumbbells", "resistance bands", "pull-up bar"])
 
-        logger.info(f"User Schedule: {schedule}")
-        logger.info(f"workout_duration: {workout_duration}")
-        logger.info(f"Workout Areas: {workout_areas}")
-        logger.info(f"Fitness level: {fitness_level}")
-        logger.info(f"Fitness Goals: {fitness_goals}")
-        logger.info(f"Equipment: {equipment}")
 
-        prompt = (
-            f"Generate a personalized workout routine based on the following preferences:\n"
-            f"1. Gender: {gender}\n"
-            f"2. Age: {age}\n"
-            f"3. Preferred Schedule: {schedule}\n"
-            f"4. Target Areas: {workout_areas}\n"
-            f"5. Preferred Duration: {workout_duration}\n"
-            f"6. Fitness Level: {fitness_level}\n"
-            f"7. Fitness Goals: {fitness_goals}\n"
-            f"8. Available Equipment: {equipment}\n\n"
-            f"Please structure the workout routine as follows, specifying the exercises for each day. "
-            f"For each exercise, specify the name, sets, reps, and duration. "
-            f"If the exercise is based on duration, specify 'N/A' for sets and reps."
-            f"If the exercise is based on sets and reps, specify 'N/A' for duration."
-            f"Please avoid adding any extra details and only add things that are asked. "
-            f"Do not use any markdown formatting in your response. Only use plain text.\n\n"
-            f"Example:\n"
-            f"- Day: Monday\n"
-            f"  - Main exercises:\n"
-            f"    - Bench Press, Sets: 4, Reps: 8-12, Duration: N/A\n"
-            f"    - Dumbbell Incline Press, Sets: 3, Reps: 10-15, Duration: N/A\n"
-            f"    - Dumbbell Flyes, Sets: 3, Reps: 12-15, Duration: N/A\n"
-            f"    - Triceps Pushdowns (resistance band), Sets: 3, Reps: 15-20, Duration: N/A\n"
-            f"    - Overhead Triceps Extension, Sets: 3, Reps: 12-15, Duration: N/A\n"
-            f"    - Treadmill, Sets: N/A, Reps: N/A, Duration: 20 minutes\n"
-        )
+       logger.info(f"User Schedule: {schedule}")
+       logger.info(f"workout_duration: {workout_duration}")
+       logger.info(f"Workout Areas: {workout_areas}")
+       logger.info(f"Fitness level: {fitness_level}")
+       logger.info(f"Fitness Goals: {fitness_goals}")
+       logger.info(f"Equipment: {equipment}")
 
-        generated_text = call_llm(prompt)
-        
-        parsed_response = parse_workout_schedule(generated_text)
-        
-        logger.info(f"Generated workout: {json.dumps(parsed_response, indent=2)}")
 
-        return JsonResponse({'generated_text': parsed_response})
-    return JsonResponse({"error": "Invalid request"}, status=400)
+       prompt = (
+           f"Generate a personalized workout routine based on the following preferences:\n"
+           f"1. Gender: {gender}\n"
+           f"2. Age: {age}\n"
+           f"3. Preferred Schedule: {', '.join(schedule)}\n"
+           f"4. Target Areas: {', '.join(workout_areas)}\n"
+           f"5. Preferred Duration: {workout_duration}\n"
+           f"6. Fitness Level: {fitness_level}\n"
+           f"7. Fitness Goals: {', '.join(fitness_goals)}\n"
+           f"8. Available Equipment: {', '.join(equipment)}\n\n"
+           f"Please structure the workout routine as follows, specifying the exercises for each day. "
+           f"For each exercise, specify the name, sets, reps, and duration. "
+           f"If the exercise is based on duration, specify 'N/A' for sets and reps."
+           f"If the exercise is based on sets and reps, specify 'N/A' for duration."
+           f"Please avoid adding any extra details and only add things that are asked. "
+           f"Do not use any markdown formatting in your response. Only use plain text.\n\n"
+           f"Example:\n"
+           f"- Day: Monday\n"
+           f"  - Main exercises:\n"
+           f"    - Bench Press, Sets: 4, Reps: 8-12, Duration: N/A\n"
+           f"    - Dumbbell Incline Press, Sets: 3, Reps: 10-15, Duration: N/A\n"
+           f"    - Dumbbell Flyes, Sets: 3, Reps: 12-15, Duration: N/A\n"
+           f"    - Triceps Pushdowns (resistance band), Sets: 3, Reps: 15-20, Duration: N/A\n"
+           f"    - Overhead Triceps Extension, Sets: 3, Reps: 12-15, Duration: N/A\n"
+           f"    - Treadmill, Sets: N/A, Reps: N/A, Duration: 20 minutes\n"
+       )
+
+
+       generated_text = call_llm(prompt)
+       parsed_response = parse_workout_schedule(generated_text)
+
+
+       response_data = {
+           "preferences": {
+               "gender": gender,
+               "age": age,
+               "schedule": schedule,
+               "workout_areas": workout_areas,
+               "workout_duration": workout_duration,
+               "fitness_level": fitness_level,
+               "fitness_goals": fitness_goals,
+               "equipment": equipment
+           },
+           "workout_schedule": parsed_response
+       }
+
+
+       logger.info(f"Generated workout: {json.dumps(response_data, indent=2)}")
+       return JsonResponse(response_data)
+
+
+   return JsonResponse({"error": "Invalid request"}, status=400)
