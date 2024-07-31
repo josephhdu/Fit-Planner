@@ -128,6 +128,10 @@ def generate_workout(request):
        fitness_level = input_data.get("fitness_level", "intermediate")
        fitness_goals = input_data.get("fitness_goals", ["muscle gain", "fat loss"])
        equipment = input_data.get("equipment", ["dumbbells", "resistance bands", "pull-up bar"])
+       
+       #for some reason gender and fitness level aren't capital
+       gender = gender.capitalize()
+       fitness_level = fitness_level.capitalize()
 
 
        logger.info(f"User Schedule: {schedule}")
