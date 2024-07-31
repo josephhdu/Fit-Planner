@@ -84,14 +84,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const textInputs = currentFormStep.querySelectorAll('textarea, input[type="text"]');
         const selectInputs = currentFormStep.querySelectorAll('select');
 
-        let checkboxChecked = false;
+        let daysCheckedCount = 0;
+        let bodyPartsCheckedCount = 0;
         let numberInputFilled = false;
         let rangeInputFilled = false;
         let allTextInputsFilled = true;
         let selectInputFilled = false;
+        let checkboxChecked = false;
 
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
+                if (checkbox.name === 'schedule') {
+                    daysCheckedCount++;
+                } else if (checkbox.name === 'workout_areas') {
+                    bodyPartsCheckedCount++;
+                }
                 checkboxChecked = true;
             }
         });
@@ -121,7 +128,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         console.log(`Step ${step} validation:`);
-        console.log(`checkboxChecked: ${checkboxChecked}`);
+        console.log(`daysCheckedCount: ${daysCheckedCount}`);
+        console.log(`bodyPartsCheckedCount: ${bodyPartsCheckedCount}`);
         console.log(`numberInputFilled: ${numberInputFilled}`);
         console.log(`rangeInputFilled: ${rangeInputFilled}`);
         console.log(`allTextInputsFilled: ${allTextInputsFilled}`);
@@ -130,15 +138,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (step === 0) {
             return selectInputFilled && rangeInputFilled; // Personal information requires both fields
         } else if (step === 1) {
-            return checkboxChecked;
+            return daysCheckedCount >= 3;
         } else if (step === 2) {
-            return rangeInputFilled && checkboxChecked;
+            return bodyPartsCheckedCount >= 3;
         } else if (step === 3) {
             return selectInputFilled && checkboxChecked;
         } else if (step === 4) {
             return checkboxChecked; // Only checkboxes need to be filled
         } else {
-            return checkboxChecked || rangeInputFilled || selectInputFilled;
+            return true;
         }
     }
 
@@ -241,6 +249,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     } else {
         console.error('Preferences form not found');
+    }
+
+    // Select All Equipment functionality
+    const selectAllButton = document.getElementById('select-all-equipment');
+    if (selectAllButton) {
+        selectAllButton.addEventListener('click', () => {
+            const equipmentCheckboxes = document.querySelectorAll('input[name="equipment"]');
+            const allChecked = Array.from(equipmentCheckboxes).every(checkbox => checkbox.checked);
+
+            equipmentCheckboxes.forEach(checkbox => checkbox.checked = !allChecked);
+            selectAllButton.textContent = allChecked ? 'Select All' : 'Deselect All';
+            console.log(allChecked ? 'All equipment deselected' : 'All equipment selected');
+        });
+    } else {
+        console.error('Select All button not found');
     }
 });
 

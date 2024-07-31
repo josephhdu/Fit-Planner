@@ -616,3 +616,19 @@ button.btn-prev:hover {
     text-align: center; /* Center the text */
 }
 
+.select-all-container {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.btn_box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.btn_box button {
+    margin: 5px;
+}
+
