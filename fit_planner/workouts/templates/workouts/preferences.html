@@ -31,7 +31,7 @@
         /* Add this new class for equipment section */
         .equipment-group {
             display: grid;
-            grid-template-columns: repeat(8, 1fr);
+            grid-template-columns: repeat(7, 1fr);
             gap: 10px; /* Adjust the gap between buttons as needed */
         }
 
@@ -371,7 +371,6 @@
                             </span>
                         </label>
                     </div>
-                    <!-- Additional Equipment -->
                     <div class="checkbox">
                         <label class="checkbox-wrapper">
                             <input type="checkbox" name="equipment" value="Ab Roller" class="checkbox-input" />
@@ -482,16 +481,58 @@
                             </span>
                         </label>
                     </div>
+                    <!-- New Equipment Options -->
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="equipment" value="Weighted Vest" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/weighted_vest.png' %}" alt="Weighted Vest" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Weighted Vest</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="equipment" value="Plyometric Box" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/plyometric_box.png' %}" alt="Plyometric Box" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Plyometric Box</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="equipment" value="Stair Master" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/stair_master.png' %}" alt="Stair Master" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Stair Master</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="equipment" value="Battle Rope" class="checkbox-input" />
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="{% static 'workouts/photo_icons/battle_rope.png' %}" alt="Battle Rope" width="24" height="24">
+                                </span>
+                                <span class="checkbox-label">Battle Rope</span>
+                            </span>
+                        </label>
+                    </div>
                 </div>
                 <br><br>
                 <div class="btn_box">
                     <button type="button" class="btn-prev">Back</button>
                     <button type="submit">Generate</button>
                     <button type="button" id="select-all-equipment">Select All</button>
-
                 </div>
-
-
             </div>
         </form>
 
