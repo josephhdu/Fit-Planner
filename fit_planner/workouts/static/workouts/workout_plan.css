@@ -1,19 +1,17 @@
 body {
-    font-family: 'Lexend', 'Noto Sans', sans-serif;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
     background-color: #f8fafc;
     margin: 0;
     padding: 0;
- }
- 
- 
- .container {
+}
+
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
- }
- 
- 
- .header {
+}
+
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,97 +19,153 @@ body {
     padding: 10px 40px;
     background-color: #ffffff;
     border-bottom: 1px solid #e7eef4;
- }
- 
- 
- .logo img {
+}
+
+.logo img {
     width: 100px;
     height: 100px;
     padding-left: 50px;
- }
- 
- 
- 
- 
- .main-content {
+}
+
+.main-content {
     max-width: 960px;
     padding: 20px;
- }
- 
- 
- .workout-overview h1 {
-    font-size: 32px;
+}
+
+.workout-overview h1 {
+    font-size: 36px;
     color: #0d151c;
- }
- 
- 
- .workout-overview p {
-    font-size: 14px;
+}
+
+.workout-overview p {
+    font-size: 16px;
     color: #49769c;
- }
- 
- 
- .tags span {
+}
+
+.tags span {
     display: inline-block;
     background-color: #e7eef4;
     color: #0d151c;
     padding: 5px 10px;
     margin: 5px;
     border-radius: 20px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
- }
- 
- 
- .preferences button {
+}
+
+.preferences button {
     background-color: #e7eef4;
     color: #0d151c;
     padding: 5px 10px;
     margin: 5px;
     border: none;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     cursor: pointer;
- }
- 
- 
- .workout-details {
+}
+
+.workout-details {
     margin-top: 20px;
- }
- 
- 
- .workout-details .day {
+}
+
+.workout-details .day {
     margin-bottom: 20px;
- }
- 
- 
- .workout-details .exercise {
+}
+
+.workout-details .day h2 {
+    font-size: 28px;
+    color: #0d151c;
+}
+
+.workout-details .exercise {
     display: flex;
     align-items: center;
     background-color: #ffffff;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
- }
- 
- 
- .workout-details .exercise img {
-    width: 70px;
-    height: 70px;
+    cursor: pointer; /* Make it look clickable */
+    transition: background-color 0.3s;
+}
+
+.workout-details .exercise:hover {
+    background-color: #f0f0f0; /* Lighter shade for hover effect */
+}
+
+.workout-details .exercise img {
+    width: 100px;
+    height: 100px;
     border-radius: 10px;
-    margin-right: 10px;
- }
- 
- 
- .workout-details .exercise .details {
+    margin-right: 15px;
+}
+
+.workout-details .exercise .details {
     flex: 1;
- }
- 
- 
- .workout-details .exercise .details p {
+}
+
+.workout-details .exercise .details p {
     margin: 0;
     color: #49769c;
- }
- 
+    font-size: 16px;
+}
+
+/* Popup Overlay */
+#popup-overlay {
+    display: none; /* Change this to 'flex' when the popup is active */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    display: flex; /* Ensures flexbox layout is used */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Popup Content */
+#popup-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+#popup-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+#popup-content h3 {
+    font-size: 24px;
+    color: #0d151c;
+    margin: 10px 0;
+}
+
+#popup-content p {
+    font-size: 16px;
+    color: #49769c;
+    margin: 5px 0;
+}
+
+/* Popup Close Button */
+#popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #0d151c;
+}
+
