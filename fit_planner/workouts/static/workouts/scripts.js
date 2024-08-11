@@ -138,9 +138,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (step === 0) {
             return selectInputFilled && rangeInputFilled; // Personal information requires both fields
         } else if (step === 1) {
-            return daysCheckedCount >= 3;
+            return daysCheckedCount >= 2;
         } else if (step === 2) {
-            return bodyPartsCheckedCount >= 3;
+            return bodyPartsCheckedCount >= 2;
         } else if (step === 3) {
             return selectInputFilled && checkboxChecked;
         } else if (step === 4) {
