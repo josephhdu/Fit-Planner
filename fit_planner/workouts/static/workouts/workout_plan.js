@@ -108,16 +108,16 @@ function displayWorkoutPlan(workoutPlan) {
                 openPopup(exercise);
             });
 
-            // const exerciseImg = document.createElement('img');
-            // exerciseImg.src = exercise.image; // Assuming your JSON includes image URLs
-            // exerciseImg.alt = exercise.exercise;
-            // exerciseDiv.appendChild(exerciseImg);
-
-            // Image placeholder, you can add the logic to get the actual image
             const exerciseImg = document.createElement('img');
-            exerciseImg.src = 'https://via.placeholder.com/150'; // Placeholder image URL
+            exerciseImg.src = exercise.image; // Assuming your JSON includes image URLs
             exerciseImg.alt = exercise.exercise;
             exerciseDiv.appendChild(exerciseImg);
+
+            // Image placeholder, you can add the logic to get the actual image
+            // const exerciseImg = document.createElement('img');
+            // exerciseImg.src = 'https://via.placeholder.com/150'; // Placeholder image URL
+            // exerciseImg.alt = exercise.exercise;
+            // exerciseDiv.appendChild(exerciseImg);
 
             const exerciseDetails = document.createElement('div');
             exerciseDetails.classList.add('details');

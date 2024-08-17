@@ -171,7 +171,8 @@ def generate_workout(request):
 
 
        generated_text = call_llm(prompt)
-       parsed_response = parse_workout_schedule(generated_text)
+       #parsed_response = parse_workout_schedule(generated_text)
+       parsed_response = parse_workout_schedule_images(generated_text)
 
 
        response_data = {
