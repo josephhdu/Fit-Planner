@@ -50,5 +50,3 @@ After setting up, you can access the application at `http://127.0.0.1:8000/`.
 - `static/` - Static files (CSS, JS, images)
 - `templates/` - HTML templates
 
-## License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
