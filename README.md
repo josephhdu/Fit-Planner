@@ -24,9 +24,15 @@ Fit Planner is an innovative web application designed to help users create worko
    ```
 2. Install dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip install django
+   pip install djangorestframework
+   pip install -q -U google-generativeai
    ```
-3. Run the Django server:
+3. Set up the Django database:
+   ```bash
+   python manage.py migrate
+   ```
+4. Run the Django server:
    ```bash
    python manage.py runserver
    ```
@@ -43,9 +49,6 @@ After setting up, you can access the application at `http://127.0.0.1:8000/`.
 - `fit_planner/` - Main Django app
 - `static/` - Static files (CSS, JS, images)
 - `templates/` - HTML templates
-
-## Contributing
-Contributions are welcome! Please create a pull request with detailed explanations.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
