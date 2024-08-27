@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from decouple import config
 from pathlib import Path
 import os
 
@@ -21,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qs1yc34ux!70i3%-w@m%t1dvg@@eox8_()8#9bqa2nd59p#%-f'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -130,4 +131,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-HUGGING_FACE_API_KEY = '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'
+GEMINI_API_KEY = config('GEMINI_API_KEY')
+SEARCH_API_KEY = config('SEARCH_API_KEY')
+SEARCH_ENGINE_ID = config('SEARCH_ENGINE_ID')

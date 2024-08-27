@@ -2,15 +2,15 @@ import google.generativeai as genai
 import re
 import json
 import requests
-
+from decouple import config
 
 # Configure the API key
-api_key = "AIzaSyD4tm7M06QqxMfGdXBXd92YN0ey2aQ_B78"
+api_key = config('GEMINI_API_KEY')
 genai.configure(api_key=api_key)
 
 #search API keys stuff
-search_api_key = "AIzaSyDGhroIdnOwgZs3whnjetveoiKpWhr7IAA"
-search_engine_ID = "a15a80858d20849b1"
+search_api_key = config('SEARCH_API_KEY')
+search_engine_ID = config('SEARCH_ENGINE_ID')
 
 # Initialize the model
 model = genai.GenerativeModel(model_name="gemini-1.5-flash")

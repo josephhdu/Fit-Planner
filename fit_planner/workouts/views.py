@@ -7,21 +7,22 @@ import json
 import logging
 import re
 import requests
+from decouple import config
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Configure the Gemini API key
-api_key = "AIzaSyD4tm7M06QqxMfGdXBXd92YN0ey2aQ_B78"
+
+api_key = config('GEMINI_API_KEY')
 genai.configure(api_key=api_key)
 
 # Initialize the model
 model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 #search API keys stuff
-search_api_key = "AIzaSyDGhroIdnOwgZs3whnjetveoiKpWhr7IAA"
-search_engine_ID = "a15a80858d20849b1"
+search_api_key = config('SEARCH_API_KEY')
+search_engine_ID = config('SEARCH_ENGINE_ID')
 
 # View to render the index page
 def index(request):
